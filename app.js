@@ -2,12 +2,13 @@
 
 const orders = [];
 
-function addOrder(customerName, productDesc, price) {
+function addOrder(customerName, productDesc, price, dueDate) {
     const order = {
         id: orders.length + 1,
         customerName: customerName,
         productDesc: productDesc,
         price: price,
+        due_date: dueDate,
         status: 'pending',
     };
     orders.push(order);
@@ -26,8 +27,19 @@ function showAllOrders() {
             order.customerName + ' | ' +
             order.productDesc + ' | ' + '$' +
             order.price + ' | ' +
-            order.status
+            order.status + ' | Due: ' +
+            order.due_date
         );
+
+        const today = new Date();
+        const dueDate = new Date(order.due_date);
+        const daysLeft = (dueDate - today) / (1000 * 60 * 60 * 24);
+
+        if (order.status === 'pending' && daysLeft < 0) {
+            console.log('❌ 订单已逾期');
+        } else if (order.status === 'pending' && daysLeft >= 0 && daysLeft <= 3) {
+            console.log('⚠️ 订单即将逾期');
+        }
     });
 }
 
@@ -101,9 +113,10 @@ function calculateProfit(orderId, cost) {
 
 // Test code
 
-addOrder('Zhang San', 'Mold A', 5000);
-addOrder('Li Si', 'Mold B', 7000);
-addOrder('Wang Wu', 'Mold C', 6000);
+addOrder('Zhang San', 'Mold A', 5000, '2026-06-04');
+addOrder('Li Si', 'Mold B', 7000, '2026-06-10');
+addOrder('Wang Wu', 'Mold C', 6000, '2026-06-03');
+addOrder('Zhao Liu', 'Mold D', 8000, '2026-06-1');
 
 findOrder('Li Si');
 findOrder('Zhao Liu');
