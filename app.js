@@ -1,4 +1,4 @@
-// 模具厂订单记录本
+// Mold factory order log
 
 const orders = [];
 
@@ -11,15 +11,15 @@ function addOrder(customerName, productDesc, price) {
         status: 'pending',
     };
     orders.push(order);
-    console.log(`订单已添加!`);
+    console.log(`Order added!`);
 }
 
 function showAllOrders() {
     if (orders.length === 0) {
-        console.log('没有订单记录。');
+        console.log('No order records.');
         return;
     }
-    console.log('--- 当前所有订单 ---');
+    console.log('--- All Current Orders ---');
     orders.forEach(function(order) {
         console.log(
             order.id + '. ' +
@@ -36,10 +36,10 @@ function findOrder(customerName) {
         return order.customerName === customerName;
     });
     if (result.length === 0) {
-        console.log('找不到客户: ' + customerName);
+        console.log('Customer not found: ' + customerName);
         return;
     }
-    console.log('--- 找到以下订单 ---');
+    console.log('--- Matching Orders ---');
     result.forEach(function(order) {
         console.log(
             order.id + '. ' +
@@ -55,11 +55,11 @@ function completeOrder(orderId) {
         return o.id === orderId;
     });
     if (order === undefined) {
-        console.log('找不到订单ID: ' + orderId);
+        console.log('Order ID not found: ' + orderId);
         return;
     }
     order.status = 'completed';
-    console.log('订单: ' + orderId + ' 已完成! 客户: ' + order.customerName);
+    console.log('Order: ' + orderId + ' completed! Customer: ' + order.customerName);
 }
 
 function deleteOrder(orderId) {
@@ -67,21 +67,21 @@ function deleteOrder(orderId) {
         return o.id === orderId;
     });
     if (index === -1) {
-        console.log('找不到订单ID: ' + orderId);
+        console.log('Order ID not found: ' + orderId);
         return;
     }
     const removedOrder = orders.splice(index, 1)[0];
-    console.log('订单: ' + orderId + ' 已删除! 客户: ' + removedOrder.customerName);
+    console.log('Order: ' + orderId + ' deleted! Customer: ' + removedOrder.customerName);
 }
 
-// 测试代码 
+// Test code
 
-addOrder('张三', '模具A', 5000);
-addOrder('李四', '模具B', 7000);
-addOrder('王五', '模具C', 6000);
+addOrder('Zhang San', 'Mold A', 5000);
+addOrder('Li Si', 'Mold B', 7000);
+addOrder('Wang Wu', 'Mold C', 6000);
 
-findOrder('李四');
-findOrder('赵六');
+findOrder('Li Si');
+findOrder('Zhao Liu');
 
 completeOrder(2);
 
