@@ -74,6 +74,31 @@ function deleteOrder(orderId) {
     console.log('Order: ' + orderId + ' deleted! Customer: ' + removedOrder.customerName);
 }
 
+function calculateProfit(orderId, cost) {
+    const order = orders.find(function(o) {
+        return o.id === orderId;
+    });
+
+    if (order === undefined) {
+        console.log('Order ID not found: ' + orderId);
+        return;
+    }
+
+    const profit = order.price - cost;
+    const profitRate = profit / order.price * 100;
+
+    console.log('Order ID: ' + order.id);
+    console.log('Customer: ' + order.customerName);
+    console.log('Quote price: $' + order.price);
+    console.log('Cost: $' + cost);
+    console.log('Profit: $' + profit);
+    console.log('Profit rate: ' + profitRate.toFixed(2) + '%');
+
+    if (profitRate < 20) {
+        console.log('⚠️ Warning: Profit rate is too low');
+    }
+}
+
 // Test code
 
 addOrder('Zhang San', 'Mold A', 5000);
@@ -86,4 +111,7 @@ findOrder('Zhao Liu');
 completeOrder(2);
 
 deleteOrder(1);
+
+calculateProfit(2, 6000);
+
 showAllOrders();
