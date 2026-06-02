@@ -1,10 +1,20 @@
 // Mold factory order log
+const fs = require('fs');
+let orders = [];
 
-const orders = [];
+function loadOrders() {
+    if (fs.existsSync('orders.json')) {
+        const data = fs.readFileSync('orders.json', 'utf8');
+        orders = JSON.parse(data);
+    }
+}
 
 function addOrder(customerName, productDesc, price, dueDate) {
+    const newId = orders.length === 0
+        ? 1
+        : Math.max(...orders.map(o => o.id)) + 1;
     const order = {
-        id: orders.length + 1,
+        id: newId,
         customerName: customerName,
         productDesc: productDesc,
         price: price,
@@ -12,6 +22,7 @@ function addOrder(customerName, productDesc, price, dueDate) {
         status: 'pending',
     };
     orders.push(order);
+    saveOrders();
     console.log(`Order added!`);
 }
 
@@ -71,6 +82,7 @@ function completeOrder(orderId) {
         return;
     }
     order.status = 'completed';
+    saveOrders();
     console.log('Order: ' + orderId + ' completed! Customer: ' + order.customerName);
 }
 
@@ -83,6 +95,7 @@ function deleteOrder(orderId) {
         return;
     }
     const removedOrder = orders.splice(index, 1)[0];
+    saveOrders();
     console.log('Order: ' + orderId + ' deleted! Customer: ' + removedOrder.customerName);
 }
 
@@ -111,20 +124,23 @@ function calculateProfit(orderId, cost) {
     }
 }
 
+function saveOrders() {
+    fs.writeFileSync(
+        'orders.json',
+        JSON.stringify(orders, null, 2)
+    );
+}
+
 // Test code
+loadOrders();
 
-addOrder('Zhang San', 'Mold A', 5000, '2026-06-04');
-addOrder('Li Si', 'Mold B', 7000, '2026-06-10');
-addOrder('Wang Wu', 'Mold C', 6000, '2026-06-03');
-addOrder('Zhao Liu', 'Mold D', 8000, '2026-06-1');
+// findOrder('Li Si');
+// findOrder('Zhao Liu');
 
-findOrder('Li Si');
-findOrder('Zhao Liu');
+// completeOrder(2);
 
-completeOrder(2);
+// deleteOrder(1);
 
-deleteOrder(1);
-
-calculateProfit(2, 6000);
+// calculateProfit(2, 6000);
 
 showAllOrders();
