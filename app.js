@@ -131,16 +131,112 @@ function saveOrders() {
     );
 }
 
-// Test code
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+
+function showMenu() {
+    console.log('=== 模具厂订单管理系统 ===');
+    console.log('1. 查看所有订单');
+    console.log('2. 添加订单');
+    console.log('3. 完成订单');
+    console.log('4. 删除订单');
+    console.log('5. 查找订单');
+    console.log('6. 计算利润');
+    console.log('7. 退出');
+    console.log();
+
+rl.question('请选择：', (answer) => {
+
+    if (answer === '1') {
+        showAllOrders();
+        showMenu();
+
+    } else if (answer === '2') {
+
+        rl.question('请输入客户名字：', (customerName) => {
+
+            rl.question('请输入产品描述：', (productDesc) => {
+
+                rl.question('请输入报价金额：', (price) => {
+
+                    rl.question('请输入交货日期(YYYY-MM-DD):', (dueDate) => {
+
+                        addOrder(
+                            customerName,
+                            productDesc,
+                            Number(price),
+                            dueDate
+                        );
+
+                        showMenu();
+
+                    });
+
+                });
+
+            });
+
+        });
+
+    } else if (answer === '3') {
+
+        rl.question('请输入订单ID：', (orderId) => {
+
+            completeOrder(Number(orderId));
+            showMenu();
+
+        });
+
+    } else if (answer === '4') {
+
+        rl.question('请输入订单ID：', (orderId) => {
+
+            deleteOrder(Number(orderId));
+            showMenu();
+
+        });
+
+    } else if (answer === '5') {
+
+        rl.question('请输入客户名字：', (customerName) => {
+
+            findOrder(customerName);
+            showMenu();
+
+        });
+
+    } else if (answer === '6') {
+
+        rl.question('请输入订单ID：', (orderId) => {
+
+            rl.question('请输入成本：', (cost) => {
+
+                calculateProfit(
+                    Number(orderId),
+                    Number(cost)
+                );
+
+                showMenu();
+
+            });
+
+        });
+
+    } else if (answer === '7') {
+        console.log('程序已退出');
+        rl.close();
+    } else {
+        console.log('无效输入');
+        rl.close();
+    }
+
+});
+}
+
 loadOrders();
-
-// findOrder('Li Si');
-// findOrder('Zhao Liu');
-
-// completeOrder(2);
-
-// deleteOrder(1);
-
-// calculateProfit(2, 6000);
-
-showAllOrders();
+showMenu();
