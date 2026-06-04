@@ -1,0 +1,24 @@
+{
+  "name": "mould-factory-cli",
+  "version": "1.0.0",
+  "description": "A command-line order management tool built for a small  precision tooling workshop.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bombtheworld/mould-factory-cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/bombtheworld/mould-factory-cli/issues"
+  },
+  "homepage": "https://github.com/bombtheworld/mould-factory-cli#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
