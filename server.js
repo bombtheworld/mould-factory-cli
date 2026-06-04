@@ -81,5 +81,5 @@ app.post('/orders/:id/profit', (req, res) => {
 });
 
 app.listen(3000, () => {
-    console.log('服务器跑起来了,端口3000');
+    console.log('Server running on port 3000');
 });

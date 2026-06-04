@@ -16,17 +16,17 @@ const rl = readline.createInterface({
 
 
 function showMenu() {
-    console.log('=== 模具厂订单管理系统 ===');
-    console.log('1. 查看所有订单');
-    console.log('2. 添加订单');
-    console.log('3. 完成订单');
-    console.log('4. 删除订单');
-    console.log('5. 查找订单');
-    console.log('6. 计算利润');
-    console.log('7. 退出');
+    console.log('=== Mould Factory Order Management System ===');
+    console.log('1. Show all orders');
+    console.log('2. Add order');
+    console.log('3. Complete order');
+    console.log('4. Delete order');
+    console.log('5. Find order');
+    console.log('6. Calculate profit');
+    console.log('7. Exit');
     console.log();
 
-rl.question('请选择：', (answer) => {
+rl.question('Select an option: ', (answer) => {
 
     if (answer === '1') {
         showAllOrders();
@@ -34,13 +34,13 @@ rl.question('请选择：', (answer) => {
 
     } else if (answer === '2') {
 
-        rl.question('请输入客户名字：', (customerName) => {
+        rl.question('Enter customer name: ', (customerName) => {
 
-            rl.question('请输入产品描述：', (productDesc) => {
+            rl.question('Enter product description: ', (productDesc) => {
 
-                rl.question('请输入报价金额：', (price) => {
+                rl.question('Enter quote price: ', (price) => {
 
-                    rl.question('请输入交货日期(YYYY-MM-DD):', (dueDate) => {
+                    rl.question('Enter due date (YYYY-MM-DD): ', (dueDate) => {
 
                         const newOrder = addOrder(
                             customerName,
@@ -62,7 +62,7 @@ rl.question('请选择：', (answer) => {
 
     } else if (answer === '3') {
 
-        rl.question('请输入订单ID：', (orderId) => {
+        rl.question('Enter order ID: ', (orderId) => {
 
             const completedOrder = completeOrder(Number(orderId));
 
@@ -78,7 +78,7 @@ rl.question('请选择：', (answer) => {
 
     } else if (answer === '4') {
 
-        rl.question('请输入订单ID：', (orderId) => {
+        rl.question('Enter order ID: ', (orderId) => {
 
             const deletedOrder = deleteOrder(Number(orderId));
 
@@ -94,7 +94,7 @@ rl.question('请选择：', (answer) => {
 
     } else if (answer === '5') {
 
-        rl.question('请输入客户名字：', (customerName) => {
+        rl.question('Enter customer name: ', (customerName) => {
 
             const result = findOrder(customerName);
 
@@ -119,9 +119,9 @@ rl.question('请选择：', (answer) => {
 
     } else if (answer === '6') {
 
-        rl.question('请输入订单ID：', (orderId) => {
+        rl.question('Enter order ID: ', (orderId) => {
 
-            rl.question('请输入成本：', (cost) => {
+            rl.question('Enter cost: ', (cost) => {
 
                 const result = calculateProfit(
                     Number(orderId),
@@ -150,10 +150,10 @@ rl.question('请选择：', (answer) => {
         });
 
     } else if (answer === '7') {
-        console.log('程序已退出');
+        console.log('Exiting...');
         rl.close();
     } else {
-        console.log('无效输入');
+        console.log('Invalid input');
         rl.close();
     }
 
@@ -185,9 +185,9 @@ function showAllOrders() {
         const daysLeft = (dueDate - today) / (1000 * 60 * 60 * 24);
 
         if (order.status === 'pending' && daysLeft < 0) {
-            console.log('❌ 订单已逾期');
+            console.log('❌ Order overdue');
         } else if (order.status === 'pending' && daysLeft >= 0 && daysLeft <= 3) {
-            console.log('⚠️ 订单即将逾期');
+            console.log('⚠️ Order due soon');
         }
     });
 }
